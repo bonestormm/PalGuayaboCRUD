@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Food;
 use Illuminate\Support\Facades\DB;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Storage;
 
 class FoodController extends Controller
 {
@@ -76,7 +77,7 @@ class FoodController extends Controller
             $extension = request()->file('image')->getClientOriginalExtension();
             $name = $request->name;
 
-            $request->file('image')->storeAs('public/images', $food->id . '/' . $image, '');
+            $request->file('image')->storeAs('public/images/foods', $food->id . '/' . $image, '');
             $food->update(['image' => $image]);
         } else {
             return redirect(RouteServiceProvider::EDITFOODS)->withError('Adjunte todos los datos hp');
@@ -93,7 +94,11 @@ class FoodController extends Controller
      */
     public function show($id)
     {
-        //
+        $menu = DB::table('comidas')
+            ->select('*')
+            ->where('id', $id)
+            ->get();
+        return view('food.showFood')->with('menus', $menu);
     }
 
     /**
@@ -105,12 +110,18 @@ class FoodController extends Controller
     public function edit($id)
     {
         $menu = DB::table('comidas')
-            ->select('*')
-            ->where('id', $id)
+            ->join('menus', 'comidas.id_menu', '=', 'menus.id')
+            ->select(
+                'comidas.id as id',
+                'comidas.id_menu as idMenu',
+                'comidas.name as name',
+                'comidas.description as description',
+                'comidas.price as price',
+                'comidas.image as image',
+                'menus.name as menuName'
+            )
             ->get();
-        $menus = DB::table('menus')
-            ->select('id','name')
-            ->get();
+        
         return view('food.editFood')->with('menus', $menu);
     }
 
@@ -123,7 +134,36 @@ class FoodController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'menu' => ['required', 'integer', 'min: 0'],
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:255'],
+            'price' => ['required', 'integer'],
+        ]);
+
+        $food = Food::find($id);
+        $food->id_menu = $request->menu;
+        $food->name = $request->name;
+        $food->description = $request->description;
+        $food->price = $request->price;
+
+        if ($request->hasFile('image')) {
+            $image = request()->file('image')->getClientOriginalName();
+            $image_path = 'images/' . $food->id . '/' . $image . '/' . $food->image;
+
+            // Get all files in a directory
+            $files =   Storage::allFiles('public/images/foods' . $food->id);
+
+            // Delete Files
+            Storage::delete($files);
+
+            $request->file('image')->storeAs('public/images/foods', $food->id . '/' . $image, '');
+            $food->update(['image' => $image]);
+        }
+
+        $food->save();
+
+        return back()->withSuccess('Menú ' . $request->name . ' editado correctamente.');
     }
 
     /**
@@ -134,6 +174,10 @@ class FoodController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $food = Food::find($id);
+        $food->delete();
+        
+        Storage::deleteDirectory('public/images/foods/' . $food->id);
+        return back()->withSuccess('Comida ' . $food->name . ' borrado correctamente.');
     }
 }

@@ -71,13 +71,13 @@
                             </td>
                             <td class="px-4 py-3">
                                 <div class="md:h-auto md:w-1/4" bis_skin_checked="1">
-                                    <img aria-hidden="true" class="object-cover w-8 h-8 rounded-full" src="{{ asset('../storage/images/') }}/{{$food->id}}/{{$food->image}}" alt="Office">
-                                    <img aria-hidden="true" class="hidden object-cover w-full h-full dark:block" src="{{ asset('../storage/images/') }}/{{$food->id}}/{{$food->image}}" alt="Office">
+                                    <img aria-hidden="true" class="object-cover w-8 h-8 rounded-full" src="{{ asset('../storage/images/foods/') }}/{{$food->id}}/{{$food->image}}" alt="Office">
+                                    <img aria-hidden="true" class="hidden object-cover w-full h-full dark:block" src="{{ asset('../storage/images/foods/') }}/{{$food->id}}/{{$food->image}}" alt="Office">
                                 </div>
                             </td>
                             <td class="px-4 py-3">
                                 <div class="mt-4">
-                                    <a href="">
+                                    <a href="{{ route('food.showSpecific', $food->id) }}">
                                         <x-button class="block w-full">
                                             {{ __('Ver') }}
                                         </x-button>
@@ -93,7 +93,7 @@
                             </td>
                             <td class="px-4 py-3">
                                 <div class="mt-4">
-                                    <a href="" onclick="return confirm('¿Estás seguro que deseas eliminar este menú?')">
+                                    <a href="{{ route('food.delete', $food->id) }}" onclick="return confirm('¿Estás seguro que deseas eliminar este menú?')">
                                         <x-button class="block w-full">
                                             {{ __('Borrar') }}
                                         </x-button>

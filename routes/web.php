@@ -44,6 +44,9 @@ Route::middleware('auth')->group(function () {
     Route::post('food', [\App\Http\Controllers\FoodController::class, 'store'])->name('food.store');
     Route::get('viewEditFood/{id}', [\App\Http\Controllers\FoodController::class, 'edit'])->name('food.viewEdit');
     Route::put('updateFood/{id}', [\App\Http\Controllers\FoodController::class, 'update'])->name('food.updateFood');
+    Route::get('deleteFood/{id}', [\App\Http\Controllers\FoodController::class, 'destroy'])->name('food.delete');
+    Route::get('showFood/{id}', [\App\Http\Controllers\FoodController::class, 'show'])->name('food.showSpecific');
+
 });
 
 

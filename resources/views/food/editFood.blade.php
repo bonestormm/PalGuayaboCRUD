@@ -33,8 +33,8 @@
 
                 <select name="menu" class="block w-full rounded-md mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                     @foreach($menus as $food)
-                    <option value="{{$food->id}}">{{$food->name}}</option>
-                    @endforeach
+                    <option value="{{$food->idMenu}}">{{$food->menuName}}</option>
+                    @endforeach 
                 </select>
                 @error('name')
                 <span class="text-xs text-red-600 dark:text-red-400">
@@ -45,7 +45,7 @@
             
             <div class="mt-4">
                 <x-label for="name" :value="__('Nombre de la comida')" />
-                <x-input type="text" id="name" name="name" class="block w-full" required />
+                <x-input type="text" id="name" name="name" class="block w-full" value="{{$food->name}}" required />
                 @error('name')
                 <span class="text-xs text-red-600 dark:text-red-400">
                     {{ $message }}
@@ -55,7 +55,7 @@
 
             <div class="mt-4">
                 <x-label for="description" :value="__('Descripción de la comida')" />
-                <x-input type="text" id="description" name="description" class="block w-full" required />
+                <x-input type="text" id="description" name="description" class="block w-full" value="{{$food->description}}" required />
                 @error('name')
                 <span class="text-xs text-red-600 dark:text-red-400">
                     {{ $message }}
@@ -65,7 +65,7 @@
             
             <div class="mt-4">
                 <x-label for="price" :value="__('Precio de la comida')" />
-                <x-input type="number" id="price" name="price" class="block w-full" min="0" required />
+                <x-input type="number" id="price" name="price" class="block w-full" min="0" value="{{$food->price}}" required />
                 @error('name')
                 <span class="text-xs text-red-600 dark:text-red-400">
                     {{ $message }}
@@ -75,7 +75,9 @@
 
             <div class="mt-4">
                 <x-label for="image" :value="__('Imagen de la comida')" />
-                <x-input type="file" id="image" name="image" class="block w-full" required />
+                <x-input type="file" id="image" name="image" class="block w-full" />
+                <img aria-hidden="true" class="object-contain h-48 w-96" src="{{ asset('/storage/images/foods') }}/{{$food->id}}/{{$food->image}}" alt="Office">
+                <img aria-hidden="true" class="hidden object-cover w-50 h-50 dark:block" src="{{ asset('../storage/images/foods') }}/{{$food->id}}/{{$food->image}}">
                 @error('name')
                 <span class="text-xs text-red-600 dark:text-red-400">
                     {{ $message }}
@@ -84,7 +86,7 @@
             </div>
             @endforeach
             <div class="mt-4">
-            <a href="{{ route('menus.updateMenu', $menu->id) }}">
+            <a href="{{ route('food.updateFood', $menu->id) }}">
                 <x-button class="block w-full">
                     {{ __('Actualizar') }}
                 </x-button>

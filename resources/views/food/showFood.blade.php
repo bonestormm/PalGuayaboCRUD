@@ -28,9 +28,9 @@
 
         <div class="mt-4">
             <x-label for="image" :value="__('Imagen del menú')" />
-            
-            <img aria-hidden="true" class="object-contain h-48 w-96" src="{{ asset('/storage/images/menus/') }}/{{$menu->id}}/{{$menu->image}}" alt="Office">
-            <img aria-hidden="true" class="hidden object-cover w-50 h-50 dark:block" src="{{ asset('../storage/images/menus/') }}/{{$menu->id}}/{{$menu->image}}">
+
+            <img aria-hidden="true" class="object-contain h-48 w-96" src="{{ asset('/storage/images/foods/') }}/{{$menu->id}}/{{$menu->image}}" alt="Office">
+            <img aria-hidden="true" class="hidden object-cover w-50 h-50 dark:block" src="{{ asset('../storage/images/foods/') }}/{{$menu->id}}/{{$menu->image}}">
             @error('name')
             <span class="text-xs text-red-600 dark:text-red-400">
                 {{ $message }}
@@ -39,13 +39,13 @@
         </div>
         <div class="flex">
             <div class="mt-4 flex-1 mr-3">
-                <a href="{{ route('menus.viewEdit', $menu->id) }}">
+                <a href="{{ route('food.viewEdit', $menu->id) }}">
                     <x-button class="block w-full">
                         {{ __('Editar') }}
                     </x-button>
             </div>
             <div class="mt-4 flex-1">
-                <a href="{{ route('menu.delete', $menu->id) }}" onclick="return confirm('¿Estás seguro que deseas eliminar el menú?')">
+                <a href="{{ route('food.delete', $menu->id) }}" onclick="return confirm('¿Estás seguro que deseas eliminar este menú?')">
                     <x-button class="block w-full">
                         {{ __('Borrar') }}
                     </x-button>
@@ -53,5 +53,6 @@
             </div>
         </div>
         @endforeach
+
     </div>
 </x-app-layout>

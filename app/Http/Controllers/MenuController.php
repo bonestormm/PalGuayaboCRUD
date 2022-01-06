@@ -7,6 +7,8 @@ use App\Models\Menu;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\QueryException;
+use Exception;
 
 class MenuController extends Controller
 {
@@ -79,7 +81,6 @@ class MenuController extends Controller
             ->where('id', $id)
             ->get();
         return view('menu.showMenu')->with('menus', $menu);
-
     }
 
     /**
@@ -146,7 +147,6 @@ class MenuController extends Controller
     {
         $menu = Menu::find($id);
         $menu->delete();
-
         Storage::deleteDirectory('public/images/menus' . $menu->id);
         return back()->withSuccess('Menú ' . $menu->name . ' borrado correctamente.');
     }

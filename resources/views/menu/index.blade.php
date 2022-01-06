@@ -63,8 +63,8 @@
                             </td>
                             <td class="px-4 py-3">
                                 <div class="md:h-auto md:w-1/4" bis_skin_checked="1">
-                                    <img aria-hidden="true" class="object-cover w-8 h-8 rounded-full" src="{{ asset('../storage/images/') }}/{{$menu->id}}/{{$menu->image}}" alt="Office">
-                                    <img aria-hidden="true" class="hidden object-cover w-full h-full dark:block" src="{{ asset('../storage/images/') }}/{{$menu->id}}/{{$menu->image}}" alt="Office">
+                                    <img aria-hidden="true" class="object-cover w-8 h-8 rounded-full" src="{{ asset('../storage/images/menus') }}/{{$menu->id}}/{{$menu->image}}" alt="Office">
+                                    <img aria-hidden="true" class="hidden object-cover w-full h-full dark:block" src="{{ asset('../storage/images/menus') }}/{{$menu->id}}/{{$menu->image}}" alt="Office">
                                 </div>
                             </td>
                             <td class="px-4 py-3">
